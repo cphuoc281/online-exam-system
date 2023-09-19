@@ -1,5 +1,5 @@
-﻿Create Database Quiz
-Use Quiz
+﻿Create Database Quiz2
+Use Quiz2
 
 Create Table Account(
 	AccountID Int IDENTITY(1,1) PRIMARY KEY,

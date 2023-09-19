@@ -44,9 +44,9 @@ public class AddFile extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
      
         String fileName = request.getParameter("upload");
-    
-        QuestionDAO.readFile("C:\\Users\\Thinh\\Desktop\\" + fileName, CollectionId);
-        
+    //C:\Users\Admin\Desktop
+        QuestionDAO.readFile("C:\\Users\\Admin\\Desktop\\" + fileName, CollectionId);
+        System.out.println(fileName);
         QuestionDAO dao = new QuestionDAO();
         int lastPage = dao.lastPagesP(1, CollectionId);
         List<Question> list = dao.getQuestionByID(CollectionId);
