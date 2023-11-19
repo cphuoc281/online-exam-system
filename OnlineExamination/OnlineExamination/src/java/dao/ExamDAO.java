@@ -21,7 +21,7 @@ public class ExamDAO {
     static PreparedStatement ps;
     static ResultSet rs;
 
-    public static ArrayList<Exam> getListExams() {
+    public ArrayList<Exam> getListExams() {
         try {
             String query = "select * from Exam";
             conn = new DBContext().getConnection();
