@@ -3,7 +3,6 @@
     Created on : Oct 31, 2023, 3:24:21 PM
     Author     : Phuoc
 --%>
-<%@ page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -119,40 +118,34 @@
         </div>
         <script class="u-script" type="text/javascript" src="js/Exam.js" defer=""></script>
         <script>
-                var passwordInput = document.querySelector('input[name="password"]');
-                var showPasswordCheckbox = document.getElementById('showPassword');
-
-                showPasswordCheckbox.addEventListener('change', function () {
-                    if (showPasswordCheckbox.checked) {
-                        passwordInput.setAttribute('type', 'text');
-                    } else {
-                        passwordInput.setAttribute('type', 'password');
-                    }
-                });
-        </script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                var table = $('#myTable').DataTable({
-                    select: true, // Enable row selection
-                    responsive: true // Enable responsiveness
-                });
+            var passwordInput = document.querySelector('input[name="password"]');
+            var showPasswordCheckbox = document.getElementById('showPassword');
+            showPasswordCheckbox.addEventListener('change', function () {
+                if (showPasswordCheckbox.checked) {
+                    passwordInput.setAttribute('type', 'text');
+                } else {
+                    passwordInput.setAttribute('type', 'password');
+                }
             });
         </script>
-        <!-- Các dòng code khác -->
+        
 
-        <script>
-            // Kiểm tra nếu có mã lỗi, hiển thị thông báo alert
-            var errorCode = '<%= request.getAttribute("errorCode") %>';
-            if (errorCode === 'questionLimitExceeded') {
-                alert("Số câu hỏi yêu cầu vượt quá số câu hỏi có trong môn học");
-            }
-        </script>
-
-
-
-
-
-
-
+<!--        <script type="text/javascript">
+        var errorMsg = '<%= request.getAttribute("errorMsg") %>';
+        if (errorMsg) {
+            // Create a new div element
+            var errorDiv = document.createElement("div");
+            // Set the content of the div to the error message
+            errorDiv.innerHTML = '<p style="color: red;">' + errorMsg + '</p>';
+            // Append the div to the body or any other container element
+            document.body.appendChild(errorDiv);
+        }
+    </script>-->
+    <script type="text/javascript">
+        var errorMsg = '<%= request.getAttribute("errorMsg") %>';
+        if (errorMsg !== null && errorMsg !== "" && errorMsg !== "null") {
+            alert(errorMsg);
+        }
+    </script>
     </body>
 </html>

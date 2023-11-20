@@ -77,16 +77,6 @@ public class CreateExamServlet extends HttpServlet {
         for (BankQuestion o : listB) {
             System.out.println(o);
         }
-//        maxAllowed = questionNumber;
-//        ExamDAO d = new ExamDAO();
-//        d.createExam(name, password, timeLimit, date, questionNumber, accountId, collectionId);
-//        Exam exam = d.getExamNewest();
-//        request.setAttribute("maxAllowed", maxAllowed);
-//        request.setAttribute("listBSize", listB.size());
-//        request.setAttribute("listB", listB);
-//        request.setAttribute("exam", exam);
-//        request.setAttribute("successMsg", "Exam created successfully!");
-//        request.getRequestDispatcher("addQuestion.jsp").forward(request, response);
         if (questionNumber <= listB.size()) {
             maxAllowed = questionNumber;
             ExamDAO d = new ExamDAO();
@@ -98,7 +88,9 @@ public class CreateExamServlet extends HttpServlet {
             request.setAttribute("successMsg", "Exam created successfully!");
             request.getRequestDispatcher("addQuestion.jsp").forward(request, response);
         } else {
-            request.setAttribute("errorMsg", "questionLimitExceeded");
+            String errorMsg = "Dữ liệu nhập không hợp lệ. Số câu hỏi đã nhập vượt quá số câu hỏi có sẵn.";
+            request.setAttribute("errorMsg", errorMsg);
+            request.getRequestDispatcher("createExam.jsp").forward(request, response);
         }
 
     }
