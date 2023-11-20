@@ -10,22 +10,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet" />
+        <%@include file="includes/header.jsp" %>
     </head>
     <body>
-        <!--        <h2>Add Questions to Exam</h2>
         
-            <form action="processQuestions.jsp" method="post">
-        <c:forEach var="i" begin="1" end="${exam.questionNumber}">
-            <div>
-                <label for="question${i}">Question ${i}:</label>
-                <textarea id="question${i}" name="question${i}" rows="4" cols="50"></textarea>
-            </div>
-            <br>
-        </c:forEach>
-
-        <input type="hidden" name="examId" value="${exam.id}">
-        <input type="submit" value="Submit Questions">
-    </form>-->
         <div class="form-container">
             <form action="CreateExam1Servlet" method="post" id="examForm">
                 <div>

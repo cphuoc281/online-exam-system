@@ -38,18 +38,27 @@
             <div class="container">
                 <div  class="row">
                     <c:set var="pagesize" value="3"></c:set>
-                    <c:set var="page" value="${not empty param.page?param.page : 1}"></c:set>
-                    <c:set var="NumPage" value="${requestScope.listExam.size()/3+1}"></c:set>
+                    <c:set var="totalItems" value="${requestScope.listExam.size()}"/>
+                    <c:set var="numPage" value="${Math.ceil(totalItems / pagesize)}"/>
+                    <c:if test="${totalItems % pagesize > 0}">
+                        <c:set var="numPage" value="${numPage + 1}"/> 
+                    </c:if>
+                    <c:set var="page">
+                        <fmt:parseNumber value="${param.page}" integerOnly="true" />  
+                    </c:set>
+                    <c:if test="${empty page}">
+                        <c:set var="page" value="1"/> 
+                    </c:if>
                     <c:forEach var="i" items="${requestScope.listExam}" begin="${(page-1)*pagesize}" end="${(page*pagesize)-1}">
                         <c:set var="ExamId" value="20"></c:set>
-                        <div class="col-lg-4 col-md-12 mb-4" >
-                            <div style="margin: 10px 0; border-radius: 10px" class="course-item bg-white">
-                                <div  class="bg-image hover-zoom ripple ripple-surface ripple-surface-light wa"
-                                     data-mdb-ripple-color="light">
-                                    <img class="img-fluid" src="assets/img/course-2.jpg" alt="">
-                                </div>
-                                <div class="text-center p-4 pb-0">
-                                    <h3 class="mb-0">${i.name}</h3>
+                            <div class="col-lg-4 col-md-12 mb-4" >
+                                <div style="margin: 10px 0; border-radius: 10px" class="course-item bg-white">
+                                    <div  class="bg-image hover-zoom ripple ripple-surface ripple-surface-light wa"
+                                          data-mdb-ripple-color="light">
+                                        <img class="img-fluid" src="assets/img/course-2.jpg" alt="">
+                                    </div>
+                                    <div class="text-center p-4 pb-0">
+                                        <h3 class="mb-0">${i.name}</h3>
                                     <h5 class="mb-4"></h5>
                                     <c:if test="${sessionScope.accountS!=null}">
                                         <a href="examJoin?id=${i.id}" style="text-decoration: none">
@@ -76,7 +85,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action="adminCreateAccountServlet" method="post">
-                                    
+
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -89,28 +98,20 @@
             </div>
             <div style="display: flex; justify-content: center; margin-top: 50px">
 
-                    <div class="pagination">
-                        <a href="?page=1" class="page" ><<</a>
+                <div class="pagination">
+                    <c:if test="${page > 1 && page <= numPage}">
+                        <a href="?page=1" class="page"><<</a>
+                        <a href="?page=${page-1}" class="previous"><</a>
+                    </c:if>
+                    <a href="#" class="active">${page}</a>
 
-                        <c:if  var="result" test="${page > 1.0}">
-                            <a href="?page=${page-1}" class="previous" > < </a>
-                        </c:if>
-
-                        <c:if  var="result" test="${page == 1.0}">
-                            <a href="?page=1" class="previous"> < </a>
-                        </c:if>
-                        <a href="#" class="active">${page}</a>
-                        <c:if  var="result" test="${page < NumPage.intValue()}">
-                            <a href="?page=${page+1}" class="next" > > </a>
-                        </c:if>
-
-                        <c:if  var="result" test="${page == NumPage.intValue()}">
-                            <a href="?page=${page}" class="next"> > </a>
-                        </c:if>
-                        <a href="?page=${NumPage.intValue()}" class="page" > >> </a> 
-                    </div>
+                    <c:if test="${page < numPage}">
+                        <a href="?page=${page+1}" class="next">></a>
+                        <a href="?page=${numPage}" class="page">>></a>  
+                    </c:if>
                 </div>
+            </div>
             <%@include file="includes/footer.jsp" %>
-            
+
     </body>
 </html>

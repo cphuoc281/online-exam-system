@@ -9,7 +9,7 @@
 <html lang="en">
 
     <head>
-        <jsp:useBean id="d" class="dao.QuestionDAO" scope="request"></jsp:useBean>
+        <jsp:useBean id="d" class="dao.BankQuestionDAO" scope="request"></jsp:useBean>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
@@ -145,7 +145,7 @@
                                     <td>${q.trueAnswer}</td>
                                     <td>${q.collectionId.name}</td>
                                     <td>${q.accountId.firstname} ${q.accountId.lastname}</td>
-                                    
+
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -163,14 +163,16 @@
 
                         <a href="">${page}</a>
 
-                        <c:if  var="result" test="${page < NumPage.intValue()}">
+                        <c:if  var="result" test="${page < NumPage and ((page + 1) * pagesize <= d.getListQuestions().size())}">
                             <a href="?page=${page+1}" class="next" style="padding:0 10px "> > </a>
                         </c:if>
 
                         <c:if  var="result" test="${page == NumPage.intValue()}">
                             <a href="?page=${page}" class="next" style="padding:0 10px "> > </a>
                         </c:if>
-                        <a href="?page=${NumPage.intValue()}" class="page" style="padding:0 10px "> >> </a>     
+                        <c:if test="${(page + 1) * pagesize <= d.getListQuestions().size()}">
+                            <a href="?page=${NumPage.intValue()}" class="page" style="padding:0 10px ">>></a>
+                        </c:if>    
                     </div>        
 
                     <br><br>
@@ -262,6 +264,14 @@
 
                 // Hiển thị ảnh trong cửa sổ popup hoặc modal
                 popup.document.write("<img src='" + imageUrl + "' width='100%' height='100%'>");
+            }
+        </script>
+        <script type="text/javascript">
+            function handleLastPageClick(currentPage, lastPage) {
+                // Kiểm tra nếu không có dữ liệu trên trang cuối, ngăn chuyển hướng
+                if (currentPage == lastPage && currentPage < lastPage) {
+                    return false;
+                }
             }
         </script>
 

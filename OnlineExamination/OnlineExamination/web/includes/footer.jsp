@@ -19,6 +19,7 @@
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body>
+        
         <footer class="footer"> 
             <div class="container">
                 <div class="row" >

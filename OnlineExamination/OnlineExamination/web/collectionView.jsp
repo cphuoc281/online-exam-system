@@ -81,11 +81,11 @@
                     <div class="pagination">
                         <a href="?page=1" class="page" ><<</a>
 
-                        <c:if  var="result" test="${page > 1.0}">
+                        <c:if  var="result" test="${page > 1}">
                             <a href="?page=${page-1}" class="previous" > < </a>
                         </c:if>
 
-                        <c:if  var="result" test="${page == 1.0}">
+                        <c:if  var="result" test="${page == 1}">
                             <a href="?page=1" class="previous"> < </a>
                         </c:if>
                         <a href="#" class="active">${page}</a>
