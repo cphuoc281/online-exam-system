@@ -40,8 +40,17 @@
                 <div class="row">
 
                     <c:set var="pagesize" value="3"></c:set>
-                    <c:set var="page" value="${not empty param.page?param.page : 1}"></c:set>
-                    <c:set var="NumPage" value="${requestScope.listCollectionDetail.size()/3+1}"></c:set>
+                    <c:set var="totalItems" value="${requestScope.listCollectionDetail.size()}"/>
+                    <c:set var="numPage" value="${Math.ceil(totalItems / pagesize)}"/>
+                    <c:if test="${totalItems % pagesize > 0}">
+                        <c:set var="numPage" value="${numPage + 1}"/> 
+                    </c:if>
+                    <c:set var="page">
+                        <fmt:parseNumber value="${param.page}" integerOnly="true" />  
+                    </c:set>
+                    <c:if test="${empty page}">
+                        <c:set var="page" value="1"/> 
+                    </c:if>
                     <c:forEach var="i" items="${requestScope.listCollectionDetail}" begin="${(page-1)*pagesize}" end="${(page*pagesize)-1}">
                         <c:set var="collectionS" value="${i.id}"/>
                         <c:set var="collectionS" value="${collectionS}" scope="session"/>    
@@ -78,27 +87,19 @@
         </section>
         <div style="display: flex; justify-content: center; margin-top: 50px">
 
-                    <div class="pagination">
-                        <a href="?page=1" class="page" ><<</a>
+                <div class="pagination">
+                    <c:if test="${page > 1 && page <= numPage}">
+                        <a href="?page=1" class="page"><<</a>
+                        <a href="?page=${page-1}" class="previous"><</a>
+                    </c:if>
+                    <a href="#" class="active">${page}</a>
 
-                        <c:if  var="result" test="${page > 1}">
-                            <a href="?page=${page-1}" class="previous" > < </a>
-                        </c:if>
-
-                        <c:if  var="result" test="${page == 1}">
-                            <a href="?page=1" class="previous"> < </a>
-                        </c:if>
-                        <a href="#" class="active">${page}</a>
-                        <c:if  var="result" test="${page < NumPage.intValue()}">
-                            <a href="?page=${page+1}" class="next" > > </a>
-                        </c:if>
-
-                        <c:if  var="result" test="${page == NumPage.intValue()}">
-                            <a href="?page=${page}" class="next"> > </a>
-                        </c:if>
-                        <a href="?page=${NumPage.intValue()}" class="page" > >> </a> 
-                    </div>
+                    <c:if test="${page < numPage}">
+                        <a href="?page=${page+1}" class="next">></a>
+                        <a href="?page=${numPage}" class="page">>></a>  
+                    </c:if>
                 </div>
+            </div>
         <%@include file="includes/footer.jsp" %>              
                  
         <!-- Bootstrap core JS-->

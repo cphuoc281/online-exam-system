@@ -3,7 +3,9 @@
     Created on : Oct 9, 2023, 2:21:11 PM
     Author     : cphuo
 --%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -129,50 +131,48 @@
                             </thead>
                             <tbody>
                             <c:set var="pagesize" value="6"></c:set>
-                            <c:set var="page" value="${not empty param.page?param.page : 1}"></c:set>
-                            <c:set var="NumPage" value="${d. getListQuestions().size()/6+1}"></c:set>
-                            <c:forEach items="${d.getListQuestions()}" var="q" begin="${(page-1)*pagesize}" end="${(page*pagesize)-1}">
-                                <tr>
-                                    <td>${q.id}</td>
-                                    <td>${q.detail}</td>
-                                    <td>
-                                        <button onclick="showImage('${q.image}')"><i class="fa-solid fa-eye"></i></button>
-                                    </td>
-                                    <td>${q.answerA}</td>
-                                    <td>${q.answerB}</td>
-                                    <td>${q.answerC}</td>
-                                    <td>${q.answerD}</td>
-                                    <td>${q.trueAnswer}</td>
-                                    <td>${q.collectionId.name}</td>
-                                    <td>${q.accountId.firstname} ${q.accountId.lastname}</td>
+                            <c:set var="totalItems" value="${d.getListQuestions().size()}"/>
+                            <c:set var="numPage" value="${Math.ceil(totalItems / pagesize)}"/>
+                            <c:if test="${totalItems % pagesize > 0}">
+                                <c:set var="numPage" value="${numPage + 1}"/> 
+                            </c:if>
+                            <c:set var="page">
+                            <fmt:parseNumber value="${param.page}" integerOnly="true" />  
+                            </c:set>
+                            <c:if test="${empty page}">
+                                <c:set var="page" value="1"/> 
+                            </c:if>
 
-                                </tr>
-                            </c:forEach>
+                            <c:forEach items="${d.getListQuestions()}" var="q" begin="${(page-1)*pagesize}" end="${(page*pagesize)-1}">
+                            <tr>
+                                <td>${q.id}</td>
+                                <td>${q.detail}</td>
+                                <td>
+                                    <button onclick="showImage('${q.image}')"><i class="fa-solid fa-eye"></i></button>
+                                </td>
+                                <td>${q.answerA}</td>
+                                <td>${q.answerB}</td>
+                                <td>${q.answerC}</td>
+                                <td>${q.answerD}</td>
+                                <td>${q.trueAnswer}</td>
+                                <td>${q.collectionId.name}</td>
+                                <td>${q.accountId.firstname} ${q.accountId.lastname}</td>
+
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                     <div class="pagination" style="display: flex " >
-                        <a href="?page=1" class="page" style="padding:0 10px "><<</a>
-
-                        <c:if  var="result" test="${page > 1.0}">
-                            <a href="?page=${page-1}" class="previous" style="padding:0 10px "> < </a>
+                        <c:if var="result" test="${page > 1 && page <= numPage}">
+                            <a href="?page=1" class="page" style="padding:0 10px"><<</a>
+                            <a href="?page=${page-1}" class="previous" style="padding:0 10px"><</a>
                         </c:if>
+                        <a href="#" class="active">${page}</a>
 
-                        <c:if  var="result" test="${page == 1.0}">
-                            <a href="?page=1" class="previous" style="padding:0 10px "> < </a>
-                        </c:if>
-
-                        <a href="">${page}</a>
-
-                        <c:if  var="result" test="${page < NumPage and ((page + 1) * pagesize <= d.getListQuestions().size())}">
-                            <a href="?page=${page+1}" class="next" style="padding:0 10px "> > </a>
-                        </c:if>
-
-                        <c:if  var="result" test="${page == NumPage.intValue()}">
-                            <a href="?page=${page}" class="next" style="padding:0 10px "> > </a>
-                        </c:if>
-                        <c:if test="${(page + 1) * pagesize <= d.getListQuestions().size()}">
-                            <a href="?page=${NumPage.intValue()}" class="page" style="padding:0 10px ">>></a>
-                        </c:if>    
+                        <c:if test="${page < numPage}">
+                            <a href="?page=${page+1}" class="next" style="padding:0 10px">></a>
+                            <a href="?page=${numPage}" class="page" style="padding:0 10px">>></a>  
+                        </c:if>   
                     </div>        
 
                     <br><br>

@@ -39,10 +39,12 @@
                 <div  class="row">
                     <c:set var="pagesize" value="3"></c:set>
                     <c:set var="totalItems" value="${requestScope.listExam.size()}"/>
-                    <c:set var="numPage" value="${Math.ceil(totalItems / pagesize)}"/>
+                    <%--<c:set var="lastPage" value="${numPage - 1}"/>--%> 
                     <c:if test="${totalItems % pagesize > 0}">
                         <c:set var="numPage" value="${numPage + 1}"/> 
                     </c:if>
+                    <c:set var="numPage" value="${Math.ceil(totalItems / pagesize)}"/>
+
                     <c:set var="page">
                         <fmt:parseNumber value="${param.page}" integerOnly="true" />  
                     </c:set>
@@ -104,14 +106,22 @@
                         <a href="?page=${page-1}" class="previous"><</a>
                     </c:if>
                     <a href="#" class="active">${page}</a>
-
                     <c:if test="${page < numPage}">
-                        <a href="?page=${page+1}" class="next">></a>
-                        <a href="?page=${numPage}" class="page">>></a>  
+                        <a href="?page=${page + 1}" class="next">></a>
+                        <a href="?page=${numPage.intValue()}" class="page">>></a>
                     </c:if>
+
                 </div>
             </div>
             <%@include file="includes/footer.jsp" %>
+            <script>
+                function goToLastPage() {
 
+                    if (page < numPage) {
+                        window.location.href = "?page=" + numPage;
+                    }
+
+                }
+            </script>
     </body>
 </html>
