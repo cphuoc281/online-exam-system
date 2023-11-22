@@ -105,7 +105,7 @@
                     </tr>
                     <tr style="display:none">
                         <td></td>
-                        <td><input name="collectionId" type="text" class="form-control" value="${collectionId}" ></td>
+                        <td><input name="collectionId" type="text" class="form-control" value="${collectionS}" ></td>
                     </tr>
 
                     <tr>

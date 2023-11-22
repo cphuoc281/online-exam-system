@@ -38,6 +38,8 @@
                     overflow-y: auto;
                 }
                 .wrapper {
+                    max-width: 100%;
+                    max-height: 488px;
                     margin-top: 50px;
                     display: flex;
                     justify-content: space-evenly;
@@ -188,12 +190,13 @@
             <c:if test="${numPage ==null}">
                 <c:set var="numPage" value="1"/>   
             </c:if>
+            
 
             <c:forEach items="${list}" var="i" begin="${(numPage-1)*pageSize}" end="${(numPage*pageSize)-1}">
                 <div class="container">
 
                     <div style="padding: 50px" class="question " id="a" onclick="showAnswer()">
-                        <div class="div-content">
+                        <div class="div-content" style="height: 390px">
                             <h1>Q${(numPage-1)*pageSize+1}: ${i.detail}</h1>
                             <p>A.${i.answerA}</p>
                             <p>B.${i.answerB}</p>

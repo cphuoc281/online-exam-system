@@ -11,17 +11,61 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-        <link href="css/styles.css" rel="stylesheet" />
         <%@include file="includes/header.jsp" %>
+        <style>
+            h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+            table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .select-all-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .submit-button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        </style>
     </head>
     <body>
-        
-        <div class="form-container">
-            <form action="CreateExam1Servlet" method="post" id="examForm">
+
+        <div class="recent-orders">
+            <form action="listExam" id="examForm">
                 <div>
                     <h2>Add Question</h2>
-
-                    <table id="myTable" class="display responsive" style="width: 100%">
+                    <table id="myTable"  >
                         <thead>
                             <tr>
                                 <th></th>
@@ -47,12 +91,10 @@
                             <!-- Add more rows as needed -->
                         </tbody>
                     </table>
-                    <button class="next" type="summit">Summit</button>
+                    <button class="submit-button">Submit</button>
                 </div>
             </form>
-            <div class="progress-container">
-                <div class="progress" id="progress"></div>
-            </div>
+
         </div>
     </body>
     <script type="text/javascript">
@@ -114,4 +156,5 @@
                 return true;
             }
         </script>
-</html>
+    
+    </html>
